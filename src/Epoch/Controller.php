@@ -142,13 +142,10 @@ class Controller
         $savvy = new \Epoch\OutputController();
         
         if ($this->options['format'] != 'html') {
+            $savvy->addTemplatePath(dirname(dirname(dirname(__FILE__))).'/www/templates/' . $this->options['format']);
+            $savvy->addTemplatePath(dirname(dirname(dirname(__FILE__))).'/www/templates/Epoch/formats/' . $this->options['format']);
             switch($this->options['format']) {
-                case 'partial':
-                    Savvy_ClassToTemplateMapper::$output_template['App\Controller'] = \Epoch\Controller::$customNamespace . '/Controller-partial';
-                    break;
-                case 'text':
                 case 'json':
-                    $savvy->addTemplatePath(dirname(__FILE__).'/www/templates/' . $this->options['format']);
                     header('Content-type:application/json;charset=UTF-8');
                     break;
                 default:
