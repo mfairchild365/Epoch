@@ -1,15 +1,14 @@
 <?php
 /**
- * Simple Active Record implementation for Tsa
+ * Simple Active Record implementation
  * 
  * PHP version 5
  * 
  * @category  Publishing
- * @package   Tsa
+ * @package   Epoch
  * @author    Brett Bieber <brett.bieber@gmail.com>
  * @copyright 2010 Regents of the University of Nebraska
  * @license   http://www1.unl.edu/wdn/wiki/Software_License BSD License
- * @link      http://peoplefinder.unl.edu/
  */
 namespace Epoch;
 
@@ -83,10 +82,6 @@ abstract class Record
             $result = $this->insert();
         } else {
             $result = $this->update();
-        }
-        
-        if (in_array('\Epoch\Notifiable', class_implements($this))) {
-            \Epoch\Notification::createNotifications($this->getNotifyClass(), $this->getNotifyReferenceID(), $saveType);
         }
         
         return $result;
@@ -368,6 +363,4 @@ abstract class Record
      * @return string
      */
     abstract public static function getTable();
-    
-    abstract public static function getByID($id);
 }

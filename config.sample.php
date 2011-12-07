@@ -27,7 +27,11 @@ error_reporting(E_ALL);
 
 \Epoch\Router::$cacheRoutes = false;
 
-\App\Controller::$url = 'http://localhost/Epoch/www/';
+//Change this to the full base url of this instance.
+\Epoch\Controller::$url = 'http://localhost/Epoch/www/';
+
+//Change this if you want to use a custom base namespace.
+\Epoch\Controller::$customNamespace = "App";
 
 \App\Controller::setDbSettings(array(
     'host'     => 'localhost',

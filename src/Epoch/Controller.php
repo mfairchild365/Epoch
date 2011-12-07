@@ -13,6 +13,8 @@ class Controller
 
     static $pagetitle = null;
     
+    public static $customNamespace = 'App';
+    
     protected static $auth;
 
     public static $url = '';

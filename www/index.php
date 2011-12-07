@@ -1,4 +1,5 @@
 <?php
+use App\Controller;
 if (file_exists(dirname(dirname(__FILE__)) . '/config.inc.php')) {
     require_once dirname(dirname(__FILE__)) . '/config.inc.php';
 } else {
@@ -7,7 +8,7 @@ if (file_exists(dirname(dirname(__FILE__)) . '/config.inc.php')) {
 
 session_start();
 
-$router = new \Epoch\Router(array('baseURL' => \App\Controller::$url, 'srcDir' => dirname(dirname(__FILE__)) . "/src/App/"));
+$router = new \Epoch\Router(array('baseURL' => \Epoch\Controller::$url, 'srcDir' => dirname(dirname(__FILE__)) . "/src/" . \Epoch\Controller::$customNamespace . "/"));
 
 if (isset($_GET['model'])) {
     unset($_GET['model']);
