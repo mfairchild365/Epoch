@@ -11,15 +11,9 @@ class Controller
         'format' => 'html'
     );
 
-    static $pagetitle = null;
-    
     public static $customNamespace = 'App';
-    
-    protected static $auth;
 
     public static $url = '';
-
-    public static $admins = array('admin');
 
     protected static $db_settings = array(
         'host'     => 'localhost',
@@ -33,7 +27,7 @@ class Controller
     function __construct($options = array())
     {
         $this->options = $options + $this->options;
-                
+        
         try {
             
             if (!empty($_POST)) {
