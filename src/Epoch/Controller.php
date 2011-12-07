@@ -56,11 +56,15 @@ class Controller
         }
     }
     
+    /**
+     * auto routes based on the options for the controller.
+     * 
+     */
     public function autoRoute()
     {
         //Sanatize input.
-        if (isset($_GET['model'])) {
-            unset($_GET['model']);
+        if (isset($this->options['model'])) {
+            unset($this->options['model']);
         }
 
         //Start the router.
@@ -137,6 +141,11 @@ class Controller
         }
     }
     
+    /**
+     * Render the actionable items for this controller via savvy.
+     * 
+     * @return string the rendered output.
+     */
     function render()
     {
         $savvy = new \Epoch\OutputController();
