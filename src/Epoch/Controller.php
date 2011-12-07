@@ -136,4 +136,29 @@ class Controller
             exit($exit);
         }
     }
+    
+    function render()
+    {
+        $savvy = new \Epoch\OutputController();
+        
+        if ($this->options['format'] != 'html') {
+            switch($this->options['format']) {
+                case 'partial':
+                    Savvy_ClassToTemplateMapper::$output_template['App\Controller'] = \Epoch\Controller::$customNamespace . '/Controller-partial';
+                    break;
+                case 'text':
+                case 'json':
+                    $savvy->addTemplatePath(dirname(__FILE__).'/www/templates/' . $this->options['format']);
+                    header('Content-type:application/json;charset=UTF-8');
+                    break;
+                default:
+                    header('Content-type:text/html;charset=UTF-8');
+            }
+        }
+        
+        // Always escape output, use $context->getRaw('var'); to get the raw data.
+        $savvy->setEscape('htmlentities');
+        
+        return $savvy->render($this);
+    }
 }
