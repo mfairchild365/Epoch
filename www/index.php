@@ -8,20 +8,14 @@ if (file_exists(dirname(dirname(__FILE__)) . '/config.inc.php')) {
 
 session_start();
 
-$router = new \Epoch\Router(array('baseURL' => \Epoch\Controller::$url, 'srcDir' => dirname(dirname(__FILE__)) . "/src/" . \Epoch\Controller::$customNamespace . "/"));
-
-if (isset($_GET['model'])) {
-    unset($_GET['model']);
-}
-
-$app = new \App\Controller($router->route($_SERVER['REQUEST_URI'], $_GET));
+$app = new \App\Controller($_GET);
 
 $savvy = new \Epoch\OutputController();
 
 if ($app->options['format'] != 'html') {
     switch($app->options['format']) {
         case 'partial':
-            Savvy_ClassToTemplateMapper::$output_template['App\Controller'] = 'App/Controller-partial';
+            Savvy_ClassToTemplateMapper::$output_template['App\Controller'] = \Epoch\Controller::$customNamespace . '/Controller-partial';
             break;
         case 'text':
         case 'json':

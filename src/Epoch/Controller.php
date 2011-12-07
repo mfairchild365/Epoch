@@ -24,9 +24,14 @@ class Controller
     
     public $actionable = array();
     
-    function __construct($options = array())
+    function __construct($options = array(), $autoRoute = true)
     {
         $this->options = $options + $this->options;
+        
+        //Will use $this->options to autoRoute.
+        if ($autoRoute) {
+            $this->autoRoute();
+        }
         
         try {
             
@@ -49,6 +54,20 @@ class Controller
 
             $this->actionable = $e;
         }
+    }
+    
+    public function autoRoute()
+    {
+        //Sanatize input.
+        if (isset($_GET['model'])) {
+            unset($_GET['model']);
+        }
+
+        //Start the router.
+        $router = new \Epoch\Router(array('baseURL' => \Epoch\Controller::$url, 'srcDir' => dirname(dirname(__FILE__)) . "/" . \Epoch\Controller::$customNamespace . "/"));
+        
+        //Do the routing.
+        $this->options = $router->route($_SERVER['REQUEST_URI'], $this->options);
     }
 
     public static function setDbSettings($settings = array())
