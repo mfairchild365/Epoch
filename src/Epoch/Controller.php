@@ -98,12 +98,11 @@ class Controller
             return;
         }
         
-        $class = new $_POST['_class']($this->options);
+        $object = new $_POST['_class']($this->options);
         
-        if (isset($_POST['action']) && $_POST['action'] == 'delete') {
-            $class->handleDelete($_POST);
-        } else {
-            $class->handlePost($_POST);
+        //the function handle post is /not/ required, so we shouldn't bet on it being there.
+        if (method_exists($object, 'handlePost')) {
+            $object->handlePost($_POST);
         }
     }
     
