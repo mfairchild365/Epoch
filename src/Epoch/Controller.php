@@ -24,9 +24,14 @@ class Controller
     
     public $actionable = array();
     
+    public $router;
+    
     function __construct($options = array(), $autoRoute = true)
     {
         $this->options = $options + $this->options;
+        
+        //Set up the router.
+        $this->router = $router = new \Epoch\Router(array('baseURL' => \Epoch\Controller::$url, 'srcDir' => dirname(dirname(__FILE__)) . "/" . \Epoch\Controller::$customNamespace . "/"));
         
         //Will use $this->options to autoRoute.
         if ($autoRoute) {
@@ -66,12 +71,9 @@ class Controller
         if (isset($this->options['model'])) {
             unset($this->options['model']);
         }
-
-        //Start the router.
-        $router = new \Epoch\Router(array('baseURL' => \Epoch\Controller::$url, 'srcDir' => dirname(dirname(__FILE__)) . "/" . \Epoch\Controller::$customNamespace . "/"));
         
         //Do the routing.
-        $this->options = $router->route($_SERVER['REQUEST_URI'], $this->options);
+        $this->options = $this->router->route($_SERVER['REQUEST_URI'], $this->options);
     }
 
     public static function setDbSettings($settings = array())
