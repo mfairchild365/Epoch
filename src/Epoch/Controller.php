@@ -65,7 +65,7 @@ class Controller
             }
             
             $this->run();
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             if (isset($this->options['ajaxupload'])) {
                 echo $e->getMessage();
                 exit();
