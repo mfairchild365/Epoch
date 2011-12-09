@@ -41,8 +41,12 @@ class Controller
         //Set the cacheRoutes.
         \Epoch\Router::$cacheRoutes = self::$cacheRoutes;
         
+        if (!self::$applicationDir) {
+            self::$applicationDir = dirname(dirname(dirname(__FILE__)));
+        }
+        
         //Set up the router.
-        $this->router = $router = new \Epoch\Router(array('baseURL' => \Epoch\Controller::$url, 'srcDir' => dirname(dirname(__FILE__)) . "/" . \Epoch\Controller::$customNamespace . "/"));
+        $this->router = $router = new \Epoch\Router(array('baseURL' => \Epoch\Controller::$url, 'srcDir' => self::$applicationDir . "/src/" . \Epoch\Controller::$customNamespace . "/"));
         
         //Will use $this->options to autoRoute.
         if ($autoRoute) {
@@ -172,7 +176,7 @@ class Controller
         $savvy = new \Epoch\OutputController();
         
         if ($this->options['format'] != 'html') {
-            $savvy->addTemplatePath(dirname(dirname(dirname(__FILE__))).'/www/templates/' . $this->options['format']);
+            $savvy->addTemplatePath(self::$applicationDir . '/www/templates/' . $this->options['format']);
             $savvy->addTemplatePath(dirname(dirname(dirname(__FILE__))).'/www/templates/Epoch/formats/' . $this->options['format']);
             switch($this->options['format']) {
                 case 'json':

@@ -13,9 +13,7 @@ spl_autoload_register("autoload");
 
 set_include_path(
     implode(PATH_SEPARATOR, array(get_include_path())).PATH_SEPARATOR
-    .dirname(__FILE__) . '/src'.PATH_SEPARATOR
-    .dirname(__FILE__).'/lib/php'.PATH_SEPARATOR
-    .dirname(__FILE__).'/lib/php/RegExpRouter/src'
+    .dirname(__FILE__) . '/src'.PATH_SEPARATOR //path to Epoch's src dir.
 );
 
 //Session life in seconds.
@@ -25,10 +23,12 @@ ini_set('display_errors', true);
 
 error_reporting(E_ALL);
 
-\Epoch\Router::$cacheRoutes = false;
+\Epoch\Controller::$cacheRoutes = false;
 
 //Change this to the full base url of this instance.
 \Epoch\Controller::$url = 'http://localhost/Epoch/www/';
+
+\Epoch\Controller::$applicationDir = dirname(__FILE__);
 
 //Change this if you want to use a custom base namespace.
 \Epoch\Controller::$customNamespace = "App";

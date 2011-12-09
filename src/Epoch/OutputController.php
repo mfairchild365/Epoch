@@ -6,7 +6,8 @@ class OutputController extends \Savvy
     function __construct($options = array())
     {
         parent::__construct();
-        $this->setTemplatePath(array(dirname(dirname(dirname(__FILE__))).'/www/templates/Epoch', dirname(dirname(dirname(__FILE__))).'/www/templates/default'));
+        $this->setTemplatePath(array(dirname(dirname(dirname(__FILE__))).'/www/templates/Epoch', 
+                                     \Epoch\Controller::$applicationDir.'/www/templates/default'));
     }
     
     public function renderObject($object, $template = null)
