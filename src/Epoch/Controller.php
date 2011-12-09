@@ -31,6 +31,8 @@ class Controller
     
     public $router;
     
+    public $templater;
+    
     function __construct($options = array(), $autoRoute = true)
     {
         $this->options = $options + $this->options;
@@ -47,6 +49,9 @@ class Controller
         
         //Set up the router.
         $this->router = $router = new \Epoch\Router(array('baseURL' => \Epoch\Controller::$url, 'srcDir' => self::$applicationDir . "/src/" . \Epoch\Controller::$customNamespace . "/"));
+        
+        //Set up the templater.
+        $this->templater = new \Epoch\OutputController();
         
         //Will use $this->options to autoRoute.
         if ($autoRoute) {
@@ -173,11 +178,11 @@ class Controller
      */
     function render()
     {
-        $savvy = new \Epoch\OutputController();
+        $this->templater = new \Epoch\OutputController();
         
         if ($this->options['format'] != 'html') {
-            $savvy->addTemplatePath(self::$applicationDir . '/www/templates/' . $this->options['format']);
-            $savvy->addTemplatePath(dirname(dirname(dirname(__FILE__))).'/www/templates/Epoch/formats/' . $this->options['format']);
+            $this->templater->addTemplatePath(self::$applicationDir . '/www/templates/' . $this->options['format']);
+            $this->templater->addTemplatePath(dirname(dirname(dirname(__FILE__))).'/www/templates/Epoch/formats/' . $this->options['format']);
             switch($this->options['format']) {
                 case 'json':
                     header('Content-type:application/json;charset=UTF-8');
@@ -188,8 +193,8 @@ class Controller
         }
         
         // Always escape output, use $context->getRaw('var'); to get the raw data.
-        $savvy->setEscape('htmlentities');
+        $this->templater->setEscape('htmlentities');
         
-        return $savvy->render($this);
+        return $this->templater->render($this);
     }
 }
