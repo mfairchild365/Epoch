@@ -39,7 +39,7 @@ class OutputController extends \Savvy
     {
         if (false !== strpos($file, '..')) {
             // checking for weird path here removes directory traversal threat
-            throw new Savvy_UnexpectedValueException('upper directory reference .. cannot be used in template filename');
+            throw new \Savvy_UnexpectedValueException('upper directory reference .. cannot be used in template filename');
         }
         
         //try to find the full name.
@@ -53,7 +53,7 @@ class OutputController extends \Savvy
         }
         
         // could not find the file in the set of paths
-        throw new Savvy_TemplateException('Could not find the template ' . $file);
+        throw new \Savvy_TemplateException('Could not find the template ' . $file);
     }
     
     /**

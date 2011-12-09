@@ -148,7 +148,7 @@ class Controller
         static $db = false;
         if (!$db) {
             $settings = self::getDbSettings();
-            $db = new mysqli($settings['host'], $settings['user'], $settings['password'], $settings['dbname']);
+            $db = new \mysqli($settings['host'], $settings['user'], $settings['password'], $settings['dbname']);
             if (mysqli_connect_error()) {
                 throw new \Exception('Database connection error (' . mysqli_connect_errno() . ') '
                         . mysqli_connect_error());
