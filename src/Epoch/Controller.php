@@ -178,8 +178,6 @@ class Controller
      */
     function render()
     {
-        $this->templater = new \Epoch\OutputController();
-        
         if ($this->options['format'] != 'html') {
             $this->templater->addTemplatePath(self::$applicationDir . '/www/templates/' . $this->options['format']);
             $this->templater->addTemplatePath(dirname(dirname(dirname(__FILE__))).'/www/templates/Epoch/formats/' . $this->options['format']);
