@@ -12,7 +12,12 @@ class Controller
     );
 
     public static $customNamespace = 'App';
+    
+    public static $applicationDir = false;
 
+    //Set cacheRoutes here isntead of \Epoch\Router.  include path might not work until this class is constructed.
+    public static $cacheRoutes = true;
+    
     public static $url = '';
 
     protected static $db_settings = array(
@@ -29,6 +34,12 @@ class Controller
     function __construct($options = array(), $autoRoute = true)
     {
         $this->options = $options + $this->options;
+        
+        //Make sure we have the correct include path...
+        $this->setIncludePath();
+        
+        //Set the cacheRoutes.
+        \Epoch\Router::$cacheRoutes = self::$cacheRoutes;
         
         //Set up the router.
         $this->router = $router = new \Epoch\Router(array('baseURL' => \Epoch\Controller::$url, 'srcDir' => dirname(dirname(__FILE__)) . "/" . \Epoch\Controller::$customNamespace . "/"));
@@ -59,6 +70,15 @@ class Controller
 
             $this->actionable = $e;
         }
+    }
+    
+    private function setIncludePath()
+    {
+        return set_include_path(
+            implode(PATH_SEPARATOR, array(get_include_path())).PATH_SEPARATOR
+            .dirname(dirname(dirname(__FILE__))).'/lib/php'.PATH_SEPARATOR
+            .dirname(dirname(dirname(__FILE__))).'/lib/php/RegExpRouter/src'
+        );
     }
     
     /**
