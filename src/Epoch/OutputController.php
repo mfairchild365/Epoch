@@ -21,11 +21,22 @@ class OutputController extends \Savvy
             // get the path to the file
             $fullname = $path . $file;
             
+            //Check a default path for format templates BEFORE we check the default directory.
+            if ($path == \Epoch\Controller::$applicationDir.'/www/templates/default/' && isset($_GET['format'])) {
+                $tempFile     = str_replace(\Epoch\Controller::$customNamespace . "/", '', $file);
+                $tempPath     = dirname(dirname(dirname(__FILE__))).'/www/templates/Epoch/formats/' . $_GET['format'];
+                $tempFullname = $tempPath . "/" . $tempFile;
+                
+                if (@is_readable($tempFullname)) {;
+                    return $tempFullname;
+                }
+            }
+            
             if (isset($this->templateMap[$fullname])) {
                 return $fullname;
             }
-
-            if (!@is_readable($fullname)) {
+            
+            if (!@is_readable($fullname)) {;
                 continue;
             }
 
@@ -44,7 +55,7 @@ class OutputController extends \Savvy
         
         //try to find the full name.
         if (!$fullname = $this->getFullname($file)) {
-            //we couldn't find it...  lets see if there is a default fall back.
+            //we couldn't find it...  lets see if there is a default fall back.  Note: we are probably falling back to the epoch controller here.
             $fullname = $this->getFullname(str_replace(\Epoch\Controller::$customNamespace . "/", '', $file));
         }
         
