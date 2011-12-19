@@ -49,7 +49,7 @@ abstract class RecordList extends \LimitIterator implements \Countable
     private function getAllForConstructor()
     {
         $class = new $this->options['itemClass'];
-        $options['sql']         = "SELECT id FROM " . $class->getTable() . "";
+        $options['sql']         = "SELECT id FROM " . mysql_escape_string($class->getTable()) . "";
         $options['returnArray'] = true;
         return $this->getBySql($options);
     }
