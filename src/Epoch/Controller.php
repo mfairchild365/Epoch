@@ -48,7 +48,7 @@ class Controller
         }
         
         //Set up the router.
-        $this->router = $router = new \Epoch\Router(array('baseURL' => \Epoch\Controller::$url, 'srcDir' => self::$applicationDir . "/src/" . \Epoch\Controller::$customNamespace . "/"));
+        $this->router = $router = new \Epoch\Router(array('baseURL' => \Epoch\Controller::$url, 'srcDir' => self::$applicationDir . "/src/" . $this->namespaceToDirector(\Epoch\Controller::$customNamespace) . "/"));
         
         //Set up the templater.
         self::$templater = new \Epoch\OutputController();
@@ -79,6 +79,10 @@ class Controller
 
             $this->actionable = $e;
         }
+    }
+    
+    function namespaceToDirector($namespace) {
+        return str_replace(array("\\", "_"), "/", $namespace);
     }
     
     private function setIncludePath()
