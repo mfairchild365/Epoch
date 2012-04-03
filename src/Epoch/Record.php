@@ -141,12 +141,12 @@ abstract class Record
         $mysqli = self::getDB();
 
         if (!$stmt = $mysqli->prepare($sql)) {
-            throw new Exception('Error preparing database statement! '.$mysqli->error, 500);
+            throw new \Exception('Error preparing database statement! '.$mysqli->error, 500);
         }
 
         call_user_func_array(array($stmt, 'bind_param'), $values);
         if ($stmt->execute() === false) {
-            throw new Exception($stmt->error, 500);
+            throw new \Exception($stmt->error, 500);
         }
 
         if ($mysqli->insert_id !== 0) {
@@ -232,7 +232,7 @@ abstract class Record
         $sql    = "DELETE FROM ".$this->getTable()." WHERE ";
         foreach ($this->keys() as $key) {
             if (empty($this->$key)) {
-                throw new Exception('Cannot delete this record.' .
+                throw new \Exception('Cannot delete this record.' .
                                     'The primary key, '.$key.' is not set!',
                                     400);
             }
@@ -275,7 +275,7 @@ abstract class Record
             return self::getByAnyField($class, $field, $args[0], $whereAdd);
             
         }
-        throw new Exception('Invalid static method called.', 500);
+        throw new \Exception('Invalid static method called.', 500);
     }
 
     public static function getByAnyField($class, $field, $value, $whereAdd = '')
