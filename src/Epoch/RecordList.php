@@ -1,7 +1,7 @@
 <?php
 namespace Epoch;
 
-abstract class RecordList extends LimitIterator implements Countable
+abstract class RecordList extends \LimitIterator implements \Countable
 {
 
     //By default, do not limit.
@@ -41,7 +41,7 @@ abstract class RecordList extends LimitIterator implements Countable
             $this->options['array'] = $this->getAllForConstructor();
         }
         
-        $list = new ArrayIterator($this->options['array']);
+        $list = new \ArrayIterator($this->options['array']);
 
         parent::__construct($list, $this->options['offset'], $this->options['limit']);
     }
