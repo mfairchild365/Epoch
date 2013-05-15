@@ -1,4 +1,4 @@
-Note: this was an expierment, and it is no longer in development.
+Note: this was an expierment, and it is no longer in development nor should it be used in production.
 
 This is an attempt to make a very lightweight php PSR-0 complient framework based on Savvy, Regexp Router, and a simple active record class.  Using these three things we have
 everything we need to start a very customizible application, with little start up time.
